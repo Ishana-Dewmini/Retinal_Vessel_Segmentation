@@ -32,13 +32,13 @@ def resize_masks(input_dir, output_dir, target_size):
                 # Resize each frame individually
                 resized_frame = cv2.resize(frame, target_size, interpolation=cv2.INTER_LINEAR)
                 
-                # Save the resized frame
-                output_path = os.path.join(output_dir, f"{frame_count}_{filename[:-4]}.png")  # Save as PNG
+                # Increment frame_count before constructing the filename
+                frame_count += 1
+
+                # Save the resized frame with the updated frame_count
+                output_path = os.path.join(output_dir, f"{filename[:-4]}.png")  # Save as PNG
                 cv2.imwrite(output_path, resized_frame)
 
-                print(f"Processed frame {frame_count} from {filename}")  # Print progress
-                
-                frame_count += 1
 
 
 
