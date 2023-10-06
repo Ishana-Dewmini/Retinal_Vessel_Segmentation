@@ -12,6 +12,20 @@ def resize_images(input_dir, output_dir, target_size,file_type):
             output_path = os.path.join(output_dir, filename)
             cv2.imwrite(output_path, img)
 
+            # Flip along the x-axis and save
+            x_flipped = cv2.flip(img, 0)
+            x_flipped_path = os.path.join(output_dir, f"{filename[:-4]}_2.png")
+            cv2.imwrite(x_flipped_path, x_flipped)
+
+            # Flip along the y-axis and save
+            y_flipped = cv2.flip(img, 1)
+            y_flipped_path = os.path.join(output_dir, f"{filename[:-4]}_3.png")
+            cv2.imwrite(y_flipped_path, y_flipped)
+
+            # Rotate 180 degrees clockwise and save
+            rotated_180 = cv2.rotate(img, cv2.ROTATE_180)
+            rotated_180_path = os.path.join(output_dir, f"{filename[:-4]}_4.png")
+            cv2.imwrite(rotated_180_path, rotated_180)
 
 def resize_masks(input_dir, output_dir, target_size):
     os.makedirs(output_dir, exist_ok=True)
@@ -38,6 +52,21 @@ def resize_masks(input_dir, output_dir, target_size):
                 # Save the resized frame with the updated frame_count
                 output_path = os.path.join(output_dir, f"{filename[:-4]}.png")  # Save as PNG
                 cv2.imwrite(output_path, resized_frame)
+
+                # Flip along the x-axis and save
+                x_flipped = cv2.flip(resized_frame, 0)
+                x_flipped_path = os.path.join(output_dir, f"{filename[:-4]}_2.png")
+                cv2.imwrite(x_flipped_path, x_flipped)
+
+                # Flip along the y-axis and save
+                y_flipped = cv2.flip(resized_frame, 1)
+                y_flipped_path = os.path.join(output_dir, f"{filename[:-4]}_3.png")
+                cv2.imwrite(y_flipped_path, y_flipped)
+
+                # Rotate 180 degrees clockwise and save
+                rotated_180 = cv2.rotate(resized_frame, cv2.ROTATE_180)
+                rotated_180_path = os.path.join(output_dir, f"{filename[:-4]}_4.png")
+                cv2.imwrite(rotated_180_path, rotated_180)
 
 
 
