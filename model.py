@@ -45,7 +45,7 @@ def load_and_preprocess_data(data_dir):
     return images, masks
 
 # Split the dataset into training and validation sets
-def split_data(images, masks, validation_split=0.2, random_state=42):
+def split_data(images, masks, validation_split=0.1, random_state=42):
     return train_test_split(images, masks, test_size=validation_split, random_state=random_state)
 
 # Define model parameters and compile the model
@@ -55,19 +55,26 @@ num_epochs = 50 # Number of times the entire training dataset is used to learn t
 learning_rate = 0.0001  # How fast the model learns (model parameters are updated)
 
 model = unet_model(input_shape) # Build the model
+print(model.summary())  # Print model summary
 model.compile(optimizer=Adam(learning_rate), loss=binary_crossentropy, metrics=['accuracy'])    # Compile the model
+print('Model compiled successfully!')
 
 # Load and preprocess your dataset
 data_dir = 'resized/training'
 images, masks = load_and_preprocess_data(data_dir)
+print(f'Images shape: {images.shape}, Masks shape: {masks.shape}')
 
 # Split the dataset into training and validation sets
 train_images, val_images, train_masks, val_masks = split_data(images, masks)
+print(f'Train images shape: {train_images.shape}, Train masks shape: {train_masks.shape}')
+print(f'Validation images shape: {val_images.shape}, Validation masks shape: {val_masks.shape}')
 
 # Train the model
 model.fit(train_images, train_masks, validation_data=(val_images, val_masks), epochs=num_epochs, batch_size=batch_size)
+print('Model trained successfully!')
 
 # Evaluate the model (you can use a test set for this)
 test_images, test_masks = load_and_preprocess_data('resized/test')
+print(f'Test images shape: {test_images.shape}, Test masks shape: {test_masks.shape}')
 test_loss, test_accuracy = model.evaluate(test_images, test_masks)
 print(f'Test Loss: {test_loss}, Test Accuracy: {test_accuracy}')
