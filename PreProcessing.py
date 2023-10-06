@@ -75,7 +75,7 @@ def resize_masks(input_dir, output_dir, target_size):
 # Usage example
 target_size = (512, 512,)
 input_images_dir = 'DRIVE/training/images'
-output_images_dir = 'Resized/training/images'
+output_images_dir = 'Resized/training'
 resize_images(input_images_dir, output_images_dir, target_size,".tif")
 
 input_masks_dir = 'DRIVE/training/1st_manual'
@@ -87,7 +87,7 @@ output_masks_dir = 'Resized/training/mask'
 resize_masks(input_masks_dir, output_masks_dir, target_size)
 
 input_images_dir = 'DRIVE/test/images'
-output_images_dir = 'Resized/test/images'
+output_images_dir = 'Resized/test'
 resize_images(input_images_dir, output_images_dir, target_size,".tif")
 
 input_masks_dir = 'DRIVE/test/mask'
