@@ -27,11 +27,12 @@ def unet_model(input_shape):
 def load_and_preprocess_data(data_dir):
     images = [] # List of images
     masks = []  # List of masks corresponding to the images
-
-    for filename in os.listdir(data_dir):
+    data_dir_images = os.path.join(data_dir, 'images')
+    data_dir_masks = os.path.join(data_dir, '1st_manual')
+    for filename in os.listdir(data_dir_images):
         if filename.endswith('.png'):  # Assuming images are in PNG format
-            img_path = os.path.join(data_dir, filename) # Assuming images are in the root directory
-            mask_path = os.path.join(data_dir, 'mask', filename.replace('.png', '_mask.png'))  # Assuming mask filenames are similar with "_manual1" suffix
+            img_path = os.path.join(data_dir_images, filename) 
+            mask_path = os.path.join(data_dir_masks, filename.replace('training.png', 'manual1.png'))  # Get corresponding mask filename
 
             img = cv2.imread(img_path, cv2.IMREAD_COLOR)
             mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
@@ -60,7 +61,7 @@ model.compile(optimizer=Adam(learning_rate), loss=binary_crossentropy, metrics=[
 print('Model compiled successfully!')
 
 # Load and preprocess your dataset
-data_dir = 'resized/training'
+data_dir = 'E:\\acadamic\\sem 5\\EN3160_Image Processing and Machine Vision\\project\\Project\\Data\\training'
 images, masks = load_and_preprocess_data(data_dir)
 print(f'Images shape: {images.shape}, Masks shape: {masks.shape}')
 
@@ -73,8 +74,8 @@ print(f'Validation images shape: {val_images.shape}, Validation masks shape: {va
 model.fit(train_images, train_masks, validation_data=(val_images, val_masks), epochs=num_epochs, batch_size=batch_size)
 print('Model trained successfully!')
 
-# Evaluate the model (you can use a test set for this)
-test_images, test_masks = load_and_preprocess_data('resized/test')
-print(f'Test images shape: {test_images.shape}, Test masks shape: {test_masks.shape}')
-test_loss, test_accuracy = model.evaluate(test_images, test_masks)
-print(f'Test Loss: {test_loss}, Test Accuracy: {test_accuracy}')
+# Save the trained model to a file
+model.save('unet_model.h5')
+print('Model saved successfully!')
+
+
