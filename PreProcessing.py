@@ -1,5 +1,6 @@
 import cv2
 import os
+# from albumentations import ElasticTransform, GridDistortion, OpticalDistortion
 
 def resize_images(input_dir, output_dir, target_size,file_type,augmentation):
     os.makedirs(output_dir, exist_ok=True)
@@ -69,6 +70,8 @@ def resize_masks(input_dir, output_dir, target_size,augmentation):
                     rotated_180 = cv2.rotate(resized_frame, cv2.ROTATE_180)
                     rotated_180_path = os.path.join(output_dir, f"iv_{filename[:-4]}.png")
                     cv2.imwrite(rotated_180_path, rotated_180)
+
+                    
 
 
 
